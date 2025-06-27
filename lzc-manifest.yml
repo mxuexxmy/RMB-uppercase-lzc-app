@@ -1,0 +1,12 @@
+lzc-sdk-version: 0.1
+name: 人民币大写
+package: xyz.mxue.app.rmbuppercase
+version: 0.0.1
+description: 
+license: https://choosealicense.com/licenses/mit/
+homepage: https://github.com/mxuexxmy/RMB-uppercase
+author: mxuexxmy
+application:
+  subdomain: rmbuppercase
+  routes:
+    - /=file:///lzcapp/pkg/content/ui

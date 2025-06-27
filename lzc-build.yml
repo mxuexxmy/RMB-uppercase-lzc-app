@@ -1,0 +1,3 @@
+contentdir: ./app-resource
+pkgout: ./
+icon: ./icon.png  

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人民币大写转换工具</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" sizes="16x16 32x32 48x48" href="./images/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16x16.png">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>人民币大写转换工具</h1>
+            <p>将阿拉伯数字金额转换为中文大写金额</p>
+        </header>
+        
+        <main>
+            <div class="converter">
+                <div class="input-section">
+                    <label for="amount">请输入金额：</label>
+                    <div class="input-group">
+                        <span class="currency-symbol">¥</span>
+                        <input type="text" id="amount" placeholder="请输入金额，如：1234.56" maxlength="20">
+                    </div>
+                    <div class="buttons">
+                        <button id="convertBtn" class="btn-primary">转换</button>
+                        <button id="clearBtn" class="btn-secondary">清空</button>
+                    </div>
+                </div>
+                
+                <div class="result-section">
+                    <label>转换结果：</label>
+                    <div class="result-tools">
+                        <button id="copyBtn" class="btn-tool" title="复制"><span>📋</span></button>
+                        <button id="zoom1Btn" class="btn-tool" title="1倍"><span>🔍 1x</span></button>
+                        <button id="zoom2Btn" class="btn-tool" title="2倍"><span>🔍 2x</span></button>
+                        <button id="zoom3Btn" class="btn-tool" title="3倍"><span>🔍 3x</span></button>
+                    </div>
+                    <div class="result-box" id="result">
+                        <span class="placeholder">转换结果将显示在这里</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="examples">
+                <h3>使用示例：</h3>
+                <div class="example-list">
+                    <div class="example-item">
+                        <span class="example-input">1234.56</span>
+                        <span class="arrow">→</span>
+                        <span class="example-output">壹仟贰佰叁拾肆元伍角陆分</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-input">1000000</span>
+                        <span class="arrow">→</span>
+                        <span class="example-output">壹佰万元整</span>
+                    </div>
+                    <div class="example-item">
+                        <span class="example-input">0.01</span>
+                        <span class="arrow">→</span>
+                        <span class="example-output">壹分</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <div class="footer-content">
+                <div class="footer-info">
+                    <p>© 2025 人民币大写转换工具</p>
+                    <p>让数字转换更简单</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html> 
