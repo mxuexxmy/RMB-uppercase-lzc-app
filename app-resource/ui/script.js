@@ -211,65 +211,105 @@ class RMBConverter {
 
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', () => {
+    const currentYearEl = document.getElementById('currentYear');
+    if (currentYearEl) {
+        currentYearEl.textContent = String(new Date().getFullYear());
+    }
+
     new RMBConverter();
 
     // 复制功能
     const copyBtn = document.getElementById('copyBtn');
     const resultBox = document.getElementById('result');
+    const resultFeedback = document.getElementById('resultFeedback');
+
+    function setFeedback(message) {
+        if (resultFeedback) {
+            resultFeedback.textContent = message;
+        }
+    }
+
     copyBtn.addEventListener('click', () => {
         const text = resultBox.innerText.trim();
         if (text && text !== '转换结果将显示在这里') {
-            navigator.clipboard.writeText(text).then(() => {
-                copyBtn.innerHTML = '✅';
-                setTimeout(() => {
-                    copyBtn.innerHTML = '<span>📋</span>';
-                }, 1200);
-            });
+            navigator.clipboard.writeText(text).then(
+                () => {
+                    copyBtn.textContent = '已复制';
+                    setFeedback('结果已复制到剪贴板。');
+                    setTimeout(() => {
+                        copyBtn.innerHTML = '<span class="tool-text">复制</span>';
+                    }, 1200);
+                },
+                () => {
+                    setFeedback('复制失败，请手动选中结果文本后复制。');
+                }
+            );
+        } else {
+            setFeedback('暂无可复制内容，请先完成转换。');
         }
     });
 
-    // 放大功能
-    const zoom1Btn = document.getElementById('zoom1Btn');
-    const zoom2Btn = document.getElementById('zoom2Btn');
-    const zoom3Btn = document.getElementById('zoom3Btn');
-    
-    function setZoom(level) {
-        // 移除所有放大类
+    // 缩放功能（加减步进）
+    const zoomOutBtn = document.getElementById('zoomOutBtn');
+    const zoomInBtn = document.getElementById('zoomInBtn');
+    const zoomLevel = document.getElementById('zoomLevel');
+    const minZoom = 1;
+    const maxZoom = 10;
+    const baseFontSizeRem = 1.08;
+    const basePaddingPx = 16;
+    let currentZoom = 1;
+
+    function applyZoom() {
         resultBox.classList.remove('zoom1', 'zoom2', 'zoom3');
-        // 移除所有按钮的active状态
-        zoom1Btn.classList.remove('active');
-        zoom2Btn.classList.remove('active');
-        zoom3Btn.classList.remove('active');
-        
-        if (level > 0) {
-            resultBox.classList.add(`zoom${level}`);
-            document.getElementById(`zoom${level}Btn`).classList.add('active');
+        if (currentZoom <= 3) {
+            resultBox.classList.add(`zoom${currentZoom}`);
+            resultBox.style.fontSize = '';
+            resultBox.style.padding = '';
+        } else {
+            resultBox.style.fontSize = `${(baseFontSizeRem * currentZoom).toFixed(2)}rem`;
+            resultBox.style.padding = `${basePaddingPx + currentZoom * 8}px`;
         }
+        zoomLevel.textContent = `${currentZoom}x`;
+        zoomOutBtn.disabled = currentZoom === minZoom;
+        zoomInBtn.disabled = currentZoom === maxZoom;
+        setFeedback(`当前显示倍率 ${currentZoom}x`);
     }
-    
-    zoom1Btn.addEventListener('click', () => {
-        if (resultBox.classList.contains('zoom1')) {
-            setZoom(0);
-        } else {
-            setZoom(1);
+
+    zoomOutBtn.addEventListener('click', () => {
+        if (currentZoom > minZoom) {
+            currentZoom -= 1;
+            applyZoom();
         }
     });
-    
-    zoom2Btn.addEventListener('click', () => {
-        if (resultBox.classList.contains('zoom2')) {
-            setZoom(0);
-        } else {
-            setZoom(2);
+
+    zoomInBtn.addEventListener('click', () => {
+        if (currentZoom < maxZoom) {
+            currentZoom += 1;
+            applyZoom();
         }
     });
-    
-    zoom3Btn.addEventListener('click', () => {
-        if (resultBox.classList.contains('zoom3')) {
-            setZoom(0);
-        } else {
-            setZoom(3);
+
+    document.addEventListener('keydown', (event) => {
+        if (!event.altKey) return;
+
+        if (event.key === '=' || event.key === '+') {
+            if (currentZoom < maxZoom) {
+                currentZoom += 1;
+                applyZoom();
+            }
+            event.preventDefault();
+        }
+
+        if (event.key === '-' || event.key === '_') {
+            if (currentZoom > minZoom) {
+                currentZoom -= 1;
+                applyZoom();
+            }
+            event.preventDefault();
         }
     });
+
+    applyZoom();
 });
 
 // 添加一些便捷的示例点击功能
@@ -278,9 +318,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const amountInput = document.getElementById('amount');
 
     examples.forEach(example => {
+        example.setAttribute('tabindex', '0');
+        example.setAttribute('role', 'button');
+        example.setAttribute('aria-label', `使用示例金额 ${example.textContent}`);
+
         example.addEventListener('click', () => {
             amountInput.value = example.textContent;
             amountInput.focus();
+        });
+
+        example.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                amountInput.value = example.textContent;
+                amountInput.focus();
+            }
         });
     });
 }); 

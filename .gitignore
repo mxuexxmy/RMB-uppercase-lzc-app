@@ -1,0 +1,21 @@
+# LPK 构建产物
+*.lpk
+
+# 图标中间文件
+icon-64.png
+icon-128.png
+icon-256.png
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# 编辑器文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 日志文件
+*.log

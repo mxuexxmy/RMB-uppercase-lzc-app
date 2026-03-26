@@ -5,47 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>人民币大写转换工具</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" sizes="16x16 32x32 48x48" href="./images/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16x16.png">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>人民币大写转换工具</h1>
-            <p>将阿拉伯数字金额转换为中文大写金额</p>
+    <div class="app-shell">
+        <header class="hero">
+            <p class="eyebrow">RMB CONVERTER</p>
+            <h1>人民币大写转换</h1>
+            <p class="subtitle">将阿拉伯数字金额快速转换为规范中文大写金额，适用于报销、合同与财务单据。</p>
+            <div class="hero-tags" aria-hidden="true">
+                <span>高精度</span>
+                <span>快速复制</span>
+                <span>支持 10x 放大</span>
+            </div>
         </header>
-        
+
         <main>
-            <div class="converter">
-                <div class="input-section">
+            <section class="converter" aria-labelledby="converter-title">
+                <h2 id="converter-title" class="sr-only">金额转换</h2>
+                <div class="input-section card">
                     <label for="amount">请输入金额：</label>
                     <div class="input-group">
                         <span class="currency-symbol">¥</span>
-                        <input type="text" id="amount" placeholder="请输入金额，如：1234.56" maxlength="20">
+                        <input type="text" id="amount" placeholder="请输入金额，如：1234.56" maxlength="20" autocomplete="off" inputmode="decimal" aria-describedby="input-help">
                     </div>
+                    <p id="input-help" class="input-help">仅支持正数，最多两位小数，金额上限为 999999999999.99。</p>
+                    <p class="hotkey-tip">快捷键：<kbd>Enter</kbd> 转换，<kbd>Alt + =</kbd> 放大，<kbd>Alt + -</kbd> 缩小</p>
                     <div class="buttons">
                         <button id="convertBtn" class="btn-primary">转换</button>
                         <button id="clearBtn" class="btn-secondary">清空</button>
                     </div>
                 </div>
-                
-                <div class="result-section">
+
+                <div class="result-section card">
                     <label>转换结果：</label>
                     <div class="result-tools">
-                        <button id="copyBtn" class="btn-tool" title="复制"><span>📋</span></button>
-                        <button id="zoom1Btn" class="btn-tool" title="1倍"><span>🔍 1x</span></button>
-                        <button id="zoom2Btn" class="btn-tool" title="2倍"><span>🔍 2x</span></button>
-                        <button id="zoom3Btn" class="btn-tool" title="3倍"><span>🔍 3x</span></button>
+                        <button id="copyBtn" class="btn-tool" title="复制结果" aria-label="复制结果">
+                            <span class="tool-text">复制</span>
+                        </button>
+                        <button id="zoomOutBtn" class="btn-tool" title="缩小字体" aria-label="缩小结果字体">-</button>
+                        <span id="zoomLevel" class="btn-tool" aria-live="polite">1x</span>
+                        <button id="zoomInBtn" class="btn-tool" title="放大字体" aria-label="放大结果字体">+</button>
                     </div>
-                    <div class="result-box" id="result">
+                    <p id="resultFeedback" class="result-feedback" aria-live="polite"></p>
+                    <div class="result-box" id="result" aria-live="polite">
                         <span class="placeholder">转换结果将显示在这里</span>
                     </div>
                 </div>
-            </div>
-            
-            <div class="examples">
+            </section>
+
+            <section class="examples card" aria-labelledby="examples-title">
+                <h2 id="examples-title" class="sr-only">使用示例</h2>
                 <h3>使用示例：</h3>
                 <div class="example-list">
                     <div class="example-item">
@@ -64,19 +80,19 @@
                         <span class="example-output">壹分</span>
                     </div>
                 </div>
-            </div>
+            </section>
         </main>
-        
+
         <footer>
             <div class="footer-content">
                 <div class="footer-info">
-                    <p>© 2025 人民币大写转换工具</p>
+                    <p>© 2025-<span id="currentYear">2025</span> 人民币大写转换工具</p>
                     <p>让数字转换更简单</p>
                 </div>
             </div>
         </footer>
     </div>
-    
+
     <script src="script.js"></script>
 </body>
 </html> 

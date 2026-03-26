@@ -1,11 +1,18 @@
 lzc-sdk-version: 0.1
 name: 人民币大写
 package: xyz.mxue.app.rmbuppercase
-version: 0.0.1
-description: 
+version: 0.1.0
+description:
 license: https://choosealicense.com/licenses/mit/
 homepage: https://github.com/mxuexxmy/RMB-uppercase
 author: mxuexxmy
+locales:
+  zh_CN:
+    name: "人民币大写"
+    description: "将阿拉伯数字金额转换为规范中文大写金额，适用于报销、合同与财务单据。"
+  en:
+    name: "RMB Uppercase Converter"
+    description: "Convert Arabic numerals to standard Chinese uppercase amounts for reimbursement, contracts, and financial documents."
 application:
   subdomain: rmbuppercase
   routes:
